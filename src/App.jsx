@@ -6,6 +6,7 @@ const App = () => {
   const [message, setMessage] = useState("");
   const [aiData, setAiData] = useState([]);
   const [pdfData, setPdfData] = useState("");
+  const [loading, setLoading] = useState(false)
 
   function handleFileUpload(event) {
     const file = event.target.files[0];
@@ -18,6 +19,7 @@ const App = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true)
     const response = await axios({
       url: "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=AIzaSyAmPj2HF7F15plPv6OTk2ak37ZtCkMNtK0",
       method: "POST",
@@ -32,6 +34,7 @@ const App = () => {
       // Check if response is valid
       setAiData([response.data.candidates[0].content.parts[0].text]);
     }
+    setLoading(false);
   };
 
   return (
@@ -73,7 +76,7 @@ const App = () => {
             </span>
             <p className="leading-relaxed">
               <span className="block font-bold text-gray-700"></span>
-              {aiData}
+              {loading? 'Generating': aiData}
             </p>
           </div>
         </div>
