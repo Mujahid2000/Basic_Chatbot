@@ -31,8 +31,10 @@ const App = () => {
     });
 
     if (response && response.data) {
-      // Check if response is valid
+    
       setAiData([response.data.candidates[0].content.parts[0].text]);
+      setMessage("");
+      setPdfData("");
     }
     setLoading(false);
   };
